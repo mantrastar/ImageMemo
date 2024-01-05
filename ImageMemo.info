@@ -1,0 +1,336 @@
+
+/'====================================================================='\
++--- - ImageMemo - -----------------------------------------------------+
+\.=====================================================================./
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ATTENTION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+       
+                         Under Construction
+                         
+       Project is subject to extreme Changes. Proceed with Caution.
+       
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+  0  :: ImageMemo
+        * Development Process Notes
+        * Ideas on System and Interface Design
+        * Text Graphics only for now...
+
+  I  :: Story
+        * Imagination Memory
+        * A Creative Tool for Anyone
+        * Seeking and Storing Images
+        * Managing Memory
+        * Visual Memory in Human and Machine
+
+  II :: Guide
+        * Mind
+        * Design
+        * Patterns
+        * Architecture
+        * Engineering
+        * Machine
+
+  X  :: Project Info
+
+
+=========================================================================
+.-----------------------------------------------------------------------.
+  0 :: ImageMemo
+'-----------------------------------------------------------------------'
+=========================================================================
+
+ImageMemo is essentially an Image Viewer mixed with a Resource Manager.
+
+* Store and load Images, view them, then use them in various Workflows.
+* Memos are Notes and other Metadata, as well as the Persistence Layer.
+
+
++--------------------+       +--------------+       +---------------+
+|      Sources       |--->---|    Image     |--->---|    Resource   |
+|  Web, Camera, ...  |---<---|    Viewer    |---<---|     Manager   |
++--------------------+       +--------------+       +---------------+
+
+
+While thinking about these basic Functions, and entertaining the deeper
+Problems that lurked beneath, it became clear that ImageMemo was a
+great simple micro App that had a very wide Scope as far as usefulness
+went.
+
+Asynchronously fetching Resources (such as Images with high Variance
+and great informational Depth and Diversity), from potentially untrusted
+or unreliable Sources, and then needing to manage Memory to cache and
+store the Data, and then dynamically render these Images (using intensive
+CPU and GPU scheduled Tasks), is no simple Feat.
+
+Learning more about this vital Subsystem that is seemingly the Heart
+of all advanced User Interfaces that connect to Networked Systems, is
+very useful. ImageMemo may serve as a valuable Test Bench and Developer
+Tool for these Purposes.
+
+
+                      Action
+                    +---->----+
+                    |         |
+    [ Goals ] --- User      System --- [ Resources ]
+                    |         |
+                    +----<----+
+                      Feedback
+
+
+Most importantly, getting these deep System Mechanics right are the
+Foundation of what makes a magical User Experience (and often a magical
+Developer Experience too). ImageMemo can also reveal where Performance
+can hinder Usability and Joy in the User Interface.
+
+The Design of the ImageMemo App Architecture is also experimental, and
+is an early Attempt to use the latest Darwin, iOS, and macOS Features
+such as Observation and Actors, alongside the more classic Property
+Accessors, Dynamic Dispatch, and Grand Central Dispatch.
+
+The Project uses Conditional Compilation in Swift, with various Build
+Flags to quickly test Permutations of UI and System Combinations. Much of
+this is made possible with Swift's powerful Type System. Typealiases are
+used to allow flexible Abstractions, without becoming overly complicated.
+
+The System seeks to optimize the Performance and Security of the main
+Resource Loop as follows:
+
+
+   +----- Get ------ [ User Action ]  <--- < Async Feedback Event > ----+
+   |                                                                    |
+   v                                                                    |
+[  Image  ]                                                             |
+   |                                                                    |
+   |                                                                    |
+   +- [ Internet ] --> [ URLSession ] --> [    AppExtension    ] --+    |
+                      [ Auth, HTTPS  ]     [    XPC, ImageIO  ]    |    |
+                                                                   |    |
+                                                                   |    |
+    +--- [ App Virtual Memory ] <--- [ App Sandbox Filesystem ] <--+    |
+    |   [    Foundation Cache  ]    [ ~/Documents, SQLite, JSON ]       |
+    |  [ mmap, malloc, libcache ]     [ Flash / Disk Storage ]          |
+    |   [  Mach VM Allocator   ]                                        |
+    |     [   Kernel Pager   ]                              ^           |
+    |      [       RAM      ]   <-----+                     |           |
+    |                                 |       < Delayed Feedback Loop > |
+    v                                 |                     |           |
+[ Memo ]                  < Immediate Feedback Loop >       |           |
+    |                                 |                     |           |
+    |                                 |                     |           |
+    +-- View ---> [ User Feedback ] --+---------------------+-----------+
+               
+               
+User Action may involve scrolling a TableView, making a URLRequest, or
+even backgrounding or exiting the App. They are unpredictable and must
+be serviced as quickly as possible by providing User Feedback.
+
+User Feedback may include rendering of an Image with low Latency and
+smooth Transitions amidst concurrent System Tasks and User Actions,
+such as on a List, TablView, CollectionView, custom ScrollView, or
+other Quartz and Metal Graphics Functions.
+
+Immediate Feedback Loops are prioritized in the Memory Cache, based
+on speculative or known User Actions, balanced with System Resource
+Constraints. This is where particularly intensive Use Cases will
+benefit most from going beyond NSCache into deeper custom Memory
+Allocators, Layout, and optimized Algorithms and Data Structures for
+more specialized Applications.
+
+Delayed Feedback Loops are costly (both to the User Experience and the
+Lifespan of the Storage Medium), and should be avoided if possible.
+Resource Limitations force swapping to Disk, but writing to Disk
+is also critical for Transactions and Persistence, to ensure that
+Images and Memos are not lost, and can be quickly reloaded as the
+App Lifecycle, System, and User requires.
+
+Async Feedback Events are determined by the logical States of the App,
+as well as the User's Goals. The System must be designed to properly
+handle any possible User Action, but good Design will create Affordances
+for the primary Tasks for which the System was meant for, and reduce
+Chances of User Error and inefficient Feedback Loops and wasted System
+Resources.
+
+                                                               
+-------------------------------------------------------------------------
+Development Task List
+-------------------------------------------------------------------------
+
+The Goal is for a lightweight and highly adaptable, modular Tool for
+testing Image and Memory Performance, at both the System and User Level.
+
+It is thus important to develop the User Interface in tandem with the
+underlying System, such that they remain in Sync throughout the entire
+Design / Develop / Test Cycle.
+
+Things like good Usability, Security, and Performance are easily lost,
+and impossible to recover. Like cooking a perfect Sauce, it only takes
+One Wrong Move to ruin the entire Dish forever. Then You have to start
+over and try again.
+
+We will go slowly and try to understand each Step, and how to best
+apply our Efforts to get a great Result. It takes some Mistakes to
+learn what works and what doesn't, so flexibility is a high Priority
+for this experimental Project.
+
+
+1 :: Core Architecture
+     x : Can't do any useful Work without a solid Skeleton to carry the
+         Load... design a good modular Architecture based on classic MVC,
+         but extended for Functional Reactive Programming, Declarative
+         Syntax, and structured Concurrency, but which is also capable of
+         falling back to more direct low-level Access to Runtime and
+         System Resources... the Model-View-Core Architecture might work.
+         
+     - : Continue to test the Ergonomics of the Architecture, and its
+         Interop with Swift, Objective-C, C and various Frameworks and
+         general Platform Standards and Developer Expectations.
+
+
+2 :: Basic Interface
+     x : Device on no XIBs or Storyboards for now, just programmatic
+         Constraints mixed with SwiftUI for rapid prototyping with Code.
+         
+     x : Usable standard Split View Layout for List and Detail Views.
+     
+     x : Basic Controls for adding Images and viewing Memory.
+     
+     x : Investigate how to combine SwiftUI with UIKit/AppKit for
+         Multiplatform App.
+         
+     x : Experiment with new Observation Framework and Interactions with
+         other Systems like Combine, and ObservableObject.
+         
+     - : Inspector View for Images to check Metadata and other.
+     
+     - : Test across Platforms (currently only macOS).
+     
+     - : Logging to the Interface, for easier untethered Testing.
+     
+     - : Runtime Settings to reduce recompiling.
+     
+     
+3 :: Basic System
+     x : Logging using os.Logger that can be called across the App.
+     
+     x : Basic Image downloading and using URLSession.
+     
+     x : Research Darwin Virtual Memory System, and various potential
+         Options for implementing an Image Cache, that may handle an
+         unpredictable Range of Data Sizes and Access Patterns - pick
+         NSCache, libcache, and mach_vm to explore further.
+         
+     - : Implement basic Allocation and add/access/remove, and profile
+         with the standard NSCache from Foundation as a Baseline Test.
+         
+     - : Build App Extension (XPC Process) to securely contain decoding
+         of untrusted Image Data downloaded, using ImageIO to also hook
+         in File Type Conversion to HEIC to save Memory.
+     
+     
+Next :: Interface Symbology and Composition
+Next :: System Profiling and automated Testing
+Next :: Early Start on solid Localization, Accessibility, Usability, Privacy
+Next :: Advanced Architecture / Interface / System
+Next :: A real proper App Icon
+Next :: Make this Guide better
+
+
+=========================================================================
+.-----------------------------------------------------------------------.
+  I :: Story
+'-----------------------------------------------------------------------'
+=========================================================================
+
+~-._.-~[ Imagination Memory ]~-._.-~-._.-~-._.-~-._.-~-._.-~-._.-~-._.-~-
+
+
+Vision and Memory are innate Experiences for all Life.
+Our Imagination, Dreams, and Visions all come from what We see around Us.
+What We remember comes from finding Meaning in what We see.
+
+How can We fuse Technology and Art to best work with Images and Memory?
+... ImageMemo attempts to explore the Limits of what can be imagined.
+
+
+=========================================================================
+.-----------------------------------------------------------------------.
+  II :: Guide
+'-----------------------------------------------------------------------'
+=========================================================================
+
+
+    HI : Consciousness        : Mind
+  --------------------------------------------
+    UI : User Interface       : Design
+    EX : Designer Experience  : Patterns
+    EX : Developer Experience : Architecture
+    IO : Core System          : Engineering
+  --------------------------------------------
+    LO : Computation          : Machine
+
+
+.-----------------------------------------------------------------------.
+  Mind                                                             HI
+'-----------------------------------------------------------------------'
+
+.-----------------------------------------------------------------------.
+  Design                                                           UI
+'-----------------------------------------------------------------------'
+
+.-----------------------------------------------------------------------.
+  Patterns                                                         EX
+'-----------------------------------------------------------------------'
+
+.-----------------------------------------------------------------------.
+  Architecture                                                     EX
+'-----------------------------------------------------------------------'
+
+
+    .----------------------------------------.
+   *.          Model | View <-> Core         .*
+   ,========================================,
+   |                                         |
+   |                                         |
+   |     ( ViewController -----[ View ] )    |
+   |     |                                   |
+   |    {App} --------+                      |
+   |      |           |                      |
+   |   /----\    +-----------+    .------.   |
+   |  | Core | --+  Reactor  +---[ System ]  |
+   |   \----/    +-----------+    '------'   |
+   |      |           |                      |
+   |   {Source} ------+                      |
+   |      |                                  |
+   |     ( ModelController ---[ Model ] )    |
+   |                                         |
+   |,                                       ,|
+    .'====================================='.
+   *           Abstract Architecture         *
+    '---------------------------------------'
+
+.-----------------------------------------------------------------------.
+  Engineering                                                      IO
+'-----------------------------------------------------------------------'
+
+.-----------------------------------------------------------------------.
+  Machine                                                          LO
+'-----------------------------------------------------------------------'
+
+=========================================================================
+.-----------------------------------------------------------------------.
+  X :: Project Info
+'-----------------------------------------------------------------------'
+=========================================================================
+ 
+ ImageMemo : https://mantra.io/studio/imagememo
+ 
+ Ven : ven@mantra.io
+ created : 2024.1.1
+ changed : 2024.1.5
+ 
+ (*)
+ mantra
+
++--- - ~<>~ ~ - ------------------------------ - ~o> mantra <o~ - ------+
+

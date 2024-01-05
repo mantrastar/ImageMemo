@@ -1,0 +1,25 @@
+//
+//  BuildSettings.xcconfig
+//  ImageMemo
+//
+//  Created by Ven Jandhyala on 1/1/24.
+//
+
+
+// App Settings
+//
+// UI          :: SWIFTUI_OFF |
+//                SWIFTUI_ON
+//
+// Cache       :: MEMO_NSCACHE |
+//                MEMO_LIBCACHE |
+//                MEMO_MACH
+//
+// Concurrency :: CONCURRENCY_ACTORS |
+//                CONCURRENCY_GCD |
+//                CONCURRENCY_MACH
+//
+APP_SETTINGS = SWIFTUI_OFF MEMO_NSCACHE CONCURRENCY_GCD
+
+SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(APP_SETTINGS)
+
