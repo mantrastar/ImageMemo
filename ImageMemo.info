@@ -12,7 +12,7 @@
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   0  :: ImageMemo
-        * Development Process Notes
+        * Design and Development Notes
         * Ideas on System and Interface Design
         * Text Graphics only for now...
 
@@ -57,14 +57,13 @@ Problems that lurked beneath, it became clear that ImageMemo was a
 great simple micro App that had a very wide Scope as far as usefulness
 went.
 
-Asynchronously fetching Resources (such as Images with high Variance
-and great informational Depth and Diversity), from potentially untrusted
-or unreliable Sources, and then needing to manage Memory to cache and
-store the Data, and then dynamically render these Images (using intensive
-CPU and GPU scheduled Tasks), is no simple Feat.
+Asynchronously fetching Resources (such as Images made of complex Signals),
+from potentially untrusted or unreliable Sources, then managing Memory to
+cache and store the Data, and eventually  render these Images (using
+intensive CPU and GPU scheduled Tasks), is no simple Feat.
 
-Learning more about this vital Subsystem that is seemingly the Heart
-of all advanced User Interfaces that connect to Networked Systems, is
+Learning more about this ubiquitous Pattern that is seemingly the Heart
+of all advanced User Interfaces connected to Networked Systems, is always
 very useful. ImageMemo may serve as a valuable Test Bench and Developer
 Tool for these Purposes.
 
@@ -79,22 +78,26 @@ Tool for these Purposes.
 
 
 Most importantly, getting these deep System Mechanics right are the
-Foundation of what makes a magical User Experience (and often a magical
+Foundation of what makes a magical User Experience (and often an enjoyable
 Developer Experience too). ImageMemo can also reveal where Performance
 can hinder Usability and Joy in the User Interface.
 
 The Design of the ImageMemo App Architecture is also experimental, and
 is an early Attempt to use the latest Darwin, iOS, and macOS Features
 such as Observation and Actors, alongside the more classic Property
-Accessors, Dynamic Dispatch, and Grand Central Dispatch.
+Accessors, Dynamic Dispatch, and Grand Central Dispatch. The classic
+Model-View-Controller is fused with Reactive Programming and Principles
+of Game Engine Architecture, to create Model-View-Core.
 
 The Project uses Conditional Compilation in Swift, with various Build
 Flags to quickly test Permutations of UI and System Combinations. Much of
 this is made possible with Swift's powerful Type System. Typealiases are
 used to allow flexible Abstractions, without becoming overly complicated.
+New Frameoworks and Technologys can be rapidly tested and qualified, for
+qualitative and quantitative Studys.
 
-The System seeks to optimize the Performance and Security of the main
-Resource Loop as follows:
+The System seeks to optimize the Performance, Security, and Usability of
+the main Resource Loop as follows:
 
 
    +----- Get ------ [ User Action ]  <--- < Async Feedback Event > ----+
